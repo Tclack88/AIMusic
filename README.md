@@ -7,3 +7,10 @@ The sheet music above represent was created by my AI trained on chopin etudes. I
 Apologies:
 
 This repo is kind of blank. It's a bit of a mess and split with another [here](https://github.com/Tclack88/Machine-Learning-Projects/tree/master/GenerateMusic_NeuralNetwork_Incomplete). I intend to move some of that code over after I make improvements to the algorithm. A blog post on the failed first attempt can be found [here](https://tclack88.github.io/blog/code/personal/2019/08/15/music-generation-fail.html)
+
+## Musical Note Detection
+Needed this for a mechanical system deign project. Categorically it seems like it might belong well here, so I'm clustering it here for maybe later.
+
+In short it records 3 seconds of audio from your microphone, then parses the output (from a fast fourier transform) to determine what note it is. It was always detecting C0 (maybe some low frequency from my computer and the closest frequency match is C0), so that's filtered out. Be warned if you're looking to detect that note. I then take the results, remove the octave (e.g. D4 -> D). The result is actually a list of notes over the interval, so I just return the most likely note based on percentage.
+
+Much of the code was shamelessly stolen/adapted from [here](https://github.com/AyushKaul/Musical-Note-detection) (AyushKaul's github repo)
