@@ -1,17 +1,12 @@
 import numpy as np
-import wave
-import struct
 import pyaudio
 import re
+import struct
+import wave
 
-#def find_nearest(array,value):
-#    idx = (np.abs(array-value)).argmin()
-#    return array[idx]
 class NoteDetect():
     def __init__(self):
-        self.window_size = 2205    # Size of window to be used for detecting silence
-        #self.beta = 1   # Silence detection parameter
-        #self.max_notes = 100    # Maximum number of notes in file, for efficiency
+        self.window_size = 2205    # Size of window (for detecting silence)
         self.sampling_freq = 44100   # Sampling frequency of audio signal
         self.threshold = 600
         
@@ -63,7 +58,7 @@ class NoteDetect():
     
     
     def predict(self):
-        ############################## Read Audio File ########################
+        """Read Audio File. Calculate frequencies return stat-baseds results"""
         print ('\n\nReading Audio File...')
         
         sound_file = wave.open(self.filename, 'r')
@@ -80,7 +75,7 @@ class NoteDetect():
         sound = np.divide(sound, float(2**15))  # Normalize data in range -1 to 1
         
         
-        ###################### DETECTING SCILENCE ##################################
+        ###################### DETECTING SILENCE ##########################
         
         sound_square = np.square(sound)
         frequency = []
@@ -114,11 +109,7 @@ class NoteDetect():
                     k = i+1
             i = i + self.window_size
         
-        #print('length',len(frequency))
-        #print("frequency")   
-        
         for i in frequency :
-            #print(i)
             idx = (np.abs(self.frequencies-i)).argmin()
             self.Identified_Notes.append(self.notes[idx])
         
@@ -139,5 +130,4 @@ class NoteDetect():
         certainty = results_weighted[likely_answer]*100
         
         #print(f'predict {likely_answer} with {certainty}% certainty')
-        return likely_answer, certainty
-    
+        return likely_answer, certainty 
